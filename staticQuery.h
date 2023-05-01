@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int const max = 200;
+int const max = 10;
 
 struct T_Cliente
 {
