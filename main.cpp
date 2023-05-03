@@ -18,10 +18,28 @@ int main()
   int qtdeCaixas = 3;
   int caixas[qtdeCaixas] = {0, 0, 0};
 
-  int expediente = 100;
+  int expediente = 1000;
 
   while (expediente > 0)
   {
+    for (int i = 0; i < qtdeCaixas; i++)
+    {
+      if (caixas[i] > 0)
+      {
+        caixas[i]--;
+        printf("Caixa [%d]: transação em andamento. Falta %d segundos\n", i, caixas[i]);
+      }
+
+      if (caixas[i] == 0 && !chkFilaVazia(&fila))
+      {
+        iniciarTransacao(&caixas[i]);
+        printf("Caixa [%d]: iniciando transação de %d segundos\n", i, caixas[i]);
+        remover(&fila);
+        printf("Cliente atendido no caixa %d depois de esperar %d segundos\n", i, cliente.horarioChegada - expediente);
+        totalEspera += cliente.horarioChegada - expediente;
+      }
+    }
+
     if (chegouCliente())
     {
       totalClientes++;
@@ -49,26 +67,10 @@ int main()
         }
         else
         {
-          printf("Cliente inserido na fila atualmente temos [%d] pessoas na fila\n", fila.qtdeAtual);
+          printf("Cliente %d inserido na fila atualmente temos [%d] pessoas na fila\n", cliente.horarioChegada, fila.qtdeAtual);
+          printf("Inicio: ");
+          imprimirFila(&fila);
         }
-      }
-    }
-
-    for (int i = 0; i < qtdeCaixas; i++)
-    {
-      if (caixas[i] > 0)
-      {
-        caixas[i]--;
-        printf("Caixa [%d]: transação em andamento. Falta %d segundos\n", i, caixas[i]);
-      }
-
-      if (caixas[i] == 0 && !chkFilaVazia(&fila))
-      {
-        iniciarTransacao(&caixas[i]);
-        printf("Caixa [%d]: iniciando transação de %d segundos\n", i, caixas[i]);
-        remover(&fila);
-        printf("Cliente atendido no caixa %d depois de esperar %d segundos\n", i, cliente.horarioChegada - expediente);
-        totalEspera += cliente.horarioChegada - expediente;
       }
     }
 

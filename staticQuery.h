@@ -44,8 +44,9 @@ void imprimirFila(T_Fila *fila)
 {
   for (int i = 0; i < fila->qtdeAtual; i++)
   {
-    printf("%d \n", (*fila).dados[i].horarioChegada);
+    printf("<- %d ", (*fila).dados[i].horarioChegada);
   }
+  printf("\n");
 }
 
 int remover(T_Fila *fila)
@@ -58,6 +59,7 @@ int remover(T_Fila *fila)
       fila->dados[i] = fila->dados[i + 1];
     }
     fila->qtdeAtual--;
+    fila->final--;
     flag = 1;
   }
 
