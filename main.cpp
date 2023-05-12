@@ -31,10 +31,11 @@ int main()
       if (caixas[i] > 0)
       {
         caixas[i]--;
-        printf("Caixa [%d]: transação em andamento. Falta %d segundos\n", i, caixas[i]);
+        printf("Caixa [%d]: Falta %d segundos | ", i, caixas[i]);
       }
     }
 
+    printf("\n");
     if (chegouCliente())
     {
       totalClientes++;
@@ -56,10 +57,10 @@ int main()
       {
         if (caixas[i] == 0)
         {
-          printf("Cliente %d atendido no caixa %d depois de esperar %d segundos\n", cliente.horarioChegada, i, cliente.horarioChegada - expediente);
+          totalEspera += primeiraPessoa(&fila) - expediente;
+          printf("Cliente atendido no caixa %d depois de esperar %d segundos\n", i, cliente.horarioChegada - expediente);
           remover(&fila);
           totalClientesAtendidos++;
-          totalEspera += cliente.horarioChegada - expediente;
           iniciarTransacao(&caixas[i]);
           printf("Caixa [%d]: iniciando transação de %d segundos\n", i, caixas[i]);
           break;
@@ -76,13 +77,12 @@ int main()
   printf("Total de clientes não atendidos: %d\n", totalClientesNaoAtendidos);
   printf("Tempo médio de espera: %d\n", totalEspera / totalClientes);
   printf("Total de espera dos clientes atendidos %d\n", totalEspera);
-  printf("Faltaram ser atendidos %d clientes\n", fila.qtdeAtual);
   return 0;
 }
 
 bool chegouCliente()
 {
-  return generateRandomNumberUntil(3) == 0;
+  return generateRandomNumberUntil(2) == 0;
 }
 
 int generateRandomNumberUntil(int max)

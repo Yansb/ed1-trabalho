@@ -65,3 +65,8 @@ int remover(T_Fila *fila)
 
   return flag;
 }
+
+int primeiraPessoa(T_Fila *fila)
+{
+  return fila->dados[0].horarioChegada;
+}
